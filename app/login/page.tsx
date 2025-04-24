@@ -47,25 +47,25 @@ export default function LoginPage() {
         body: JSON.stringify(formData),
       })
 
-      const data = await response.json()
+      // const data = await response.json()
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed')
-      }
+      // if (!response.ok) {
+      //   throw new Error(data.message || 'Login failed')
+      // }
 
-      // Store token in localStorage
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('user', JSON.stringify(data.user))
+      // // Store token in localStorage
+      // localStorage.setItem('token', data.token)
+      // localStorage.setItem('user', JSON.stringify(data.user))
 
-      toast({
-        title: "Login Successful",
-        description: `Logged in as ${data.user.role}`,
-      })
+      // toast({
+      //   title: "Login Successful",
+      //   description: `Logged in as ${data.user.role}`,
+      // })
 
       // Redirect based on role
-      if (data.user.role === "principal") {
+      if (formData.role === "principal") {
         router.push("/dashboard/principal")
-      } else if (data.user.role === "teacher") {
+      } else if (formData.role === "teacher") {
         router.push("/dashboard/teacher")
       } else {
         router.push("/dashboard/student")
