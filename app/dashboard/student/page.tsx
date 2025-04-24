@@ -7,9 +7,18 @@ import { Badge } from "@/components/ui/badge"
 import DashboardLayout from "@/components/dashboard-layout"
 import { BookOpen, Clock, CheckCircle, BarChart, Award, Calendar, AlertTriangle } from "lucide-react"
 import { useSearchParams, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 
-export default function StudentDashboard() {
+
+export default function TeacherDashboard() {
+  return (
+    <Suspense>
+      <StudentDashboardConent />
+    </Suspense>
+  )
+}
+
+function StudentDashboardConent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [activeTab, setActiveTab] = useState("overview")
@@ -29,6 +38,7 @@ export default function StudentDashboard() {
   }
 
   return (
+
     <DashboardLayout role="student">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
@@ -37,14 +47,14 @@ export default function StudentDashboard() {
             <p className="text-muted-foreground dark:text-slate-400">Take exams, view results, and track your progress</p>
           </div>
           <div className="flex gap-2">
-            <Button 
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 dark:hover:from-blue-600 dark:hover:to-blue-700" 
+            <Button
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 dark:hover:from-blue-600 dark:hover:to-blue-700"
               onClick={() => handleTabChange("overview")}
             >
               Overview
             </Button>
-            <Button 
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 dark:hover:from-blue-600 dark:hover:to-blue-700" 
+            <Button
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 dark:hover:from-blue-600 dark:hover:to-blue-700"
               onClick={() => handleTabChange("exams")}
             >
               View Available Exams
@@ -203,15 +213,14 @@ export default function StudentDashboard() {
                         </div>
                         <div className="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-700">
                           <div
-                            className={`h-2 rounded-full ${
-                              result.score >= 85
+                            className={`h-2 rounded-full ${result.score >= 85
                                 ? "bg-green-500 dark:bg-green-600"
                                 : result.score >= 70
                                   ? "bg-blue-500 dark:bg-blue-600"
                                   : result.score >= 50
                                     ? "bg-yellow-500 dark:bg-yellow-600"
                                     : "bg-red-500 dark:bg-red-600"
-                            }`}
+                              }`}
                             style={{ width: `${result.score}%` }}
                           />
                         </div>
@@ -313,11 +322,10 @@ export default function StudentDashboard() {
                       </div>
                       <Button
                         disabled={exam.status !== "Available"}
-                        className={`w-full md:w-auto ${
-                          exam.status === "Available"
+                        className={`w-full md:w-auto ${exam.status === "Available"
                             ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
                             : ""
-                        }`}
+                          }`}
                         asChild
                       >
                         <Link href={`/exam/${i}`}>
@@ -394,15 +402,14 @@ export default function StudentDashboard() {
                         <div className="flex items-center gap-2 mt-1">
                           <div className="h-2 w-24 rounded-full bg-slate-100">
                             <div
-                              className={`h-2 rounded-full ${
-                                result.bestScore >= 85
+                              className={`h-2 rounded-full ${result.bestScore >= 85
                                   ? "bg-green-500"
                                   : result.bestScore >= 70
                                     ? "bg-blue-500"
                                     : result.bestScore >= 50
                                       ? "bg-yellow-500"
                                       : "bg-red-500"
-                              }`}
+                                }`}
                               style={{ width: `${result.bestScore}%` }}
                             />
                           </div>
@@ -431,5 +438,6 @@ export default function StudentDashboard() {
         </Tabs>
       </div>
     </DashboardLayout>
+
   )
 }

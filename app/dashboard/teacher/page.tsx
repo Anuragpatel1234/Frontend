@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label"
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+
+import { useState, useEffect, Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -16,6 +17,14 @@ import ExamManagement from "@/components/exam-management"
 import { useSearchParams, useRouter } from "next/navigation"
 
 export default function TeacherDashboard() {
+  return (
+    <Suspense>
+      <TeacherDashboardContent />
+    </Suspense>
+  )
+}
+
+function TeacherDashboardContent() {
   const [activeTab, setActiveTab] = useState("overview")
   const searchParams = useSearchParams()
   const router = useRouter()
